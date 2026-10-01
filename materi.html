@@ -1,0 +1,903 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pusat Materi & Catatan | HIMAPTIKA</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===============================
+           MATERI PAGE
+        =============================== */
+
+        .study-hero {
+            background: #123456;
+            color: white;
+            padding: 85px 7%;
+        }
+
+        .study-hero-content {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .study-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #a9c9e8;
+            margin-bottom: 20px;
+        }
+
+        .study-hero h2 {
+            font-size: clamp(36px, 6vw, 62px);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .study-hero p {
+            max-width: 600px;
+            line-height: 1.8;
+            color: #dce8f3;
+        }
+
+        .study-container {
+            width: 86%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .study-intro {
+            padding: 75px 0 35px;
+        }
+
+        .study-intro h2 {
+            color: #123456;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .study-intro p {
+            color: #687887;
+            line-height: 1.8;
+        }
+
+        .semester-section {
+            padding: 35px 0 85px;
+        }
+
+        .semester-heading {
+            margin-bottom: 35px;
+        }
+
+        .semester-heading h2 {
+            color: #123456;
+            font-size: 34px;
+            margin: 12px 0;
+        }
+
+        .semester-heading p {
+            color: #687887;
+            line-height: 1.7;
+        }
+
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .semester-card {
+            border: 1px solid #e1e7ed;
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #123456;
+        }
+
+        .semester-card:hover,
+        .semester-card.active {
+            background: #123456;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(18,52,86,0.15);
+        }
+
+        .semester-card span {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #7895b0;
+            margin-bottom: 20px;
+        }
+
+        .semester-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .semester-card p {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .semester-card strong {
+            font-size: 13px;
+        }
+
+        /* ===============================
+           COURSE PANEL
+        =============================== */
+
+        .course-panel {
+            display: none;
+            margin-top: 45px;
+            padding: 35px;
+            background: #f5f8fb;
+            border: 1px solid #e1e7ed;
+            border-radius: 18px;
+            scroll-margin-top: 100px;
+        }
+
+        .course-panel.show {
+            display: block;
+            animation: panelAppear 0.35s ease;
+        }
+
+        @keyframes panelAppear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-panel h3 {
+            color: #123456;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .course-panel > p {
+            color: #687887;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: white;
+            border: 1px solid #e1e7ed;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .course-item h4 {
+            color: #123456;
+            font-size: 15px;
+        }
+
+        .course-item span {
+            color: #7895b0;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .course-item a {
+            text-decoration: none;
+            background: #123456;
+            color: white;
+            padding: 9px 13px;
+            border-radius: 7px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .course-item a:hover {
+            background: #245b8c;
+        }
+
+        .course-empty {
+            background: white;
+            border: 1px dashed #b8c6d2;
+            border-radius: 12px;
+            padding: 25px;
+            color: #687887;
+            line-height: 1.7;
+        }
+
+        .study-back {
+            padding: 30px 0 80px;
+        }
+
+        .study-back a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #123456;
+            padding: 13px 22px;
+            border-radius: 8px;
+        }
+
+        /* ===============================
+           DARK MODE
+        =============================== */
+
+        body.dark-mode .study-intro h2,
+        body.dark-mode .semester-heading h2 {
+            color: white;
+        }
+
+        body.dark-mode .study-intro p,
+        body.dark-mode .semester-heading p {
+            color: #aab7c4;
+        }
+
+        body.dark-mode .semester-card {
+            background: #182330;
+            border-color: #304154;
+            color: white;
+        }
+
+        body.dark-mode .semester-card:hover,
+        body.dark-mode .semester-card.active {
+            background: #245b8c;
+        }
+
+        body.dark-mode .course-panel {
+            background: #111a24;
+            border-color: #304154;
+        }
+
+        body.dark-mode .course-panel h3 {
+            color: white;
+        }
+
+        body.dark-mode .course-panel > p {
+            color: #aab7c4;
+        }
+
+        body.dark-mode .course-item {
+            background: #182330;
+            border-color: #304154;
+        }
+
+        body.dark-mode .course-item h4 {
+            color: white;
+        }
+
+        body.dark-mode .course-empty {
+            background: #182330;
+            border-color: #304154;
+            color: #aab7c4;
+        }
+
+        /* ===============================
+           RESPONSIVE
+        =============================== */
+
+        @media (max-width: 900px) {
+            .semester-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .study-hero {
+                padding: 65px 7%;
+            }
+
+            .study-container {
+                width: 90%;
+            }
+
+            .semester-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-list {
+                grid-template-columns: 1fr;
+            }
+
+            .course-panel {
+                padding: 22px;
+            }
+
+            .semester-heading h2 {
+                font-size: 28px;
+            }
+
+            .course-item {
+                align-items: flex-start;
+            }
+        }
+        /* =================================
+   MATERI PAGE - VISUAL ENHANCEMENT
+================================= */
+
+/* Latar halaman */
+body {
+    background: #fbfcfe;
+}
+
+/* Intro */
+.study-intro {
+    position: relative;
+}
+
+.study-intro h2 {
+    max-width: 700px;
+    line-height: 1.25;
+    letter-spacing: -1px;
+}
+
+.study-intro p:not(.study-label) {
+    max-width: 720px;
+    font-size: 15px;
+}
+
+/* Heading semester */
+.semester-heading h2 {
+    letter-spacing: -1px;
+}
+
+.semester-heading {
+    position: relative;
+}
+
+/* Kartu semester */
+.semester-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 215px;
+    border: 1px solid #e5ebf1;
+    border-radius: 18px;
+    padding: 27px;
+    box-shadow: 0 5px 18px rgba(18, 52, 86, 0.035);
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease;
+}
+
+/* Nomor semester */
+.semester-card span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #edf4fa;
+    color: #245b8c;
+    font-size: 13px;
+    margin-bottom: 24px;
+    transition: 0.3s ease;
+}
+
+/* Judul dan keterangan */
+.semester-card h3 {
+    font-size: 21px;
+    letter-spacing: -0.4px;
+}
+
+.semester-card p {
+    color: #7b8997;
+    line-height: 1.6;
+}
+
+.semester-card strong {
+    display: inline-block;
+    margin-top: 5px;
+    color: #245b8c;
+    transition: transform 0.3s ease;
+}
+
+/* Hover */
+.semester-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(18, 52, 86, 0.12);
+    border-color: #123456;
+}
+
+.semester-card:hover span {
+    background: rgba(255,255,255,0.18);
+    color: white;
+}
+
+.semester-card:hover p,
+.semester-card:hover strong,
+.semester-card:hover span {
+    color: white;
+}
+
+.semester-card:hover strong {
+    transform: translateX(5px);
+}
+
+/* Kartu aktif */
+.semester-card.active {
+    background: #123456;
+    border-color: #123456;
+}
+
+.semester-card.active span {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.semester-card.active p,
+.semester-card.active strong {
+    color: #dce8f3;
+}
+
+/* Panel mata kuliah */
+.course-panel {
+    background: white;
+    border: 1px solid #e5ebf1;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(18, 52, 86, 0.06);
+}
+
+.course-panel h3 {
+    letter-spacing: -0.5px;
+}
+
+.course-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 35px 25px;
+    border-radius: 14px;
+    background: #f8fafc;
+}
+
+/* Tombol kembali */
+.study-back a {
+    transition: 0.3s ease;
+}
+
+.study-back a:hover {
+    background: #245b8c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(18,52,86,0.15);
+}
+
+/* Dark mode */
+body.dark-mode {
+    background: #0f1720;
+}
+
+body.dark-mode .semester-card span {
+    background: #26394c;
+    color: #c7def2;
+}
+
+body.dark-mode .semester-card p {
+    color: #aab7c4;
+}
+
+body.dark-mode .semester-card:hover span,
+body.dark-mode .semester-card.active span {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+body.dark-mode .semester-card:hover p,
+body.dark-mode .semester-card.active p {
+    color: #dce8f3;
+}
+
+body.dark-mode .course-panel {
+    background: #111a24;
+    box-shadow: none;
+}
+
+body.dark-mode .course-empty {
+    background: #182330;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .study-intro {
+        padding-top: 55px;
+    }
+
+    .semester-card {
+        min-height: 190px;
+        padding: 23px;
+    }
+
+    .semester-card span {
+        margin-bottom: 18px;
+    }
+
+    .course-panel {
+        margin-top: 30px;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="brand">
+
+            <img src="images/logo.png" alt="Logo HIMAPTIKA">
+
+            <div class="brand-text">
+                <h1>HIMAPTIKA</h1>
+                <p>Himpunan Mahasiswa Pendidikan Matematika</p>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="index.html">Beranda</a>
+            <a href="tentang.html">Tentang</a>
+            <a href="divisi.html">Divisi & Program Kerja</a>
+            <a href="informasi.html">Informasi</a>
+            <a href="agenda.html">Agenda</a>
+            <a href="kontak.html">Kontak</a>
+
+            <button id="darkModeToggle" class="dark-mode-toggle">
+                🌙
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="study-hero">
+
+        <div class="study-hero-content">
+
+            <p class="study-label">
+                HIMAPTIKA STUDY HUB
+            </p>
+
+            <h2>
+                Pusat Materi
+                <br>
+                & Catatan.
+            </h2>
+
+            <p>
+                Ruang berbagi materi, catatan, rangkuman,
+                dan referensi belajar dari mahasiswa
+                untuk mahasiswa HIMAPTIKA.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= INTRO ================= -->
+
+    <section class="study-intro">
+
+        <div class="study-container">
+
+            <p class="study-label" style="color:#567b9e;">
+                BELAJAR BERSAMA
+            </p>
+
+            <h2>
+                Satu ruang untuk berbagai sumber belajar.
+            </h2>
+
+            <p>
+                Pilih semester untuk menemukan daftar mata kuliah.
+                Setiap mata kuliah nantinya dapat dilengkapi
+                dengan materi, catatan, rangkuman, dan referensi
+                pembelajaran yang tersimpan di Google Drive.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SEMESTER ================= -->
+
+    <section class="semester-section" id="daftar-semester">
+
+        <div class="study-container">
+
+            <div class="semester-heading">
+
+                <p class="study-label" style="color:#567b9e;">
+                    PILIH SEMESTER
+                </p>
+
+                <h2>
+                    Temukan Materi Perkuliahan
+                </h2>
+
+                <p>
+                    Klik salah satu semester untuk melihat
+                    daftar mata kuliah.
+                </p>
+
+            </div>
+
+
+            <div class="semester-grid">
+
+                <button class="semester-card" data-semester="1">
+                    <span>01</span>
+                    <h3>Semester 1</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="2">
+                    <span>02</span>
+                    <h3>Semester 2</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="3">
+                    <span>03</span>
+                    <h3>Semester 3</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="4">
+                    <span>04</span>
+                    <h3>Semester 4</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="5">
+                    <span>05</span>
+                    <h3>Semester 5</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="6">
+                    <span>06</span>
+                    <h3>Semester 6</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="7">
+                    <span>07</span>
+                    <h3>Semester 7</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+                <button class="semester-card" data-semester="8">
+                    <span>08</span>
+                    <h3>Semester 8</h3>
+                    <p>Materi & catatan perkuliahan</p>
+                    <strong>Lihat Mata Kuliah →</strong>
+                </button>
+
+            </div>
+
+
+            <!-- ================= DAFTAR MATA KULIAH ================= -->
+
+            <div class="course-panel" id="coursePanel">
+
+                <h3 id="courseTitle">
+                    Semester
+                </h3>
+
+                <p id="courseDescription">
+                    Daftar mata kuliah akan ditampilkan di sini.
+                </p>
+
+                <div class="course-list" id="courseList">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= KEMBALI ================= -->
+
+    <section class="study-back">
+
+        <div class="study-container">
+
+            <a href="academic-survival.html">
+                ← Kembali ke Academic Survival Web
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 HIMAPTIKA FKIP UNTAD
+        </p>
+
+        <p>
+            Himpunan Mahasiswa Pendidikan Matematika
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /*
+        Data mata kuliah belum diisi karena
+        daftar resmi mata kuliah tiap semester
+        belum diberikan.
+        */
+
+        const semesterData = {
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            8: []
+        };
+
+
+        const semesterCards =
+            document.querySelectorAll(".semester-card");
+
+        const coursePanel =
+            document.getElementById("coursePanel");
+
+        const courseTitle =
+            document.getElementById("courseTitle");
+
+        const courseDescription =
+            document.getElementById("courseDescription");
+
+        const courseList =
+            document.getElementById("courseList");
+
+
+        semesterCards.forEach(function(card) {
+
+            card.addEventListener("click", function() {
+
+                const semester = this.dataset.semester;
+
+                semesterCards.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                this.classList.add("active");
+
+                courseTitle.textContent =
+                    "Daftar Mata Kuliah Semester " + semester;
+
+                courseDescription.textContent =
+                    "Pilih mata kuliah untuk mengakses materi dan catatan.";
+
+                courseList.innerHTML = "";
+
+                const courses = semesterData[semester];
+
+                if (courses.length === 0) {
+
+                    courseList.innerHTML = `
+                        <div class="course-empty">
+                            <strong>Materi sedang disiapkan.</strong>
+                            <br><br>
+                            Daftar mata kuliah dan link materi
+                            untuk semester ini belum ditambahkan.
+                            Silakan kembali lagi nanti.
+                        </div>
+                    `;
+
+                } else {
+
+                    courses.forEach(function(course) {
+
+                        const item = document.createElement("div");
+
+                        item.className = "course-item";
+
+                        item.innerHTML = `
+                            <div>
+                                <h4>${course.name}</h4>
+                                <span>Materi & Catatan</span>
+                            </div>
+
+                            <a href="${course.link}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Buka Materi ↗
+                            </a>
+                        `;
+
+                        courseList.appendChild(item);
+
+                    });
+
+                }
+
+                coursePanel.classList.add("show");
+
+                coursePanel.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest"
+                });
+
+            });
+
+        });
+
+
+        /* DARK MODE */
+
+        const darkModeToggle =
+            document.querySelector("#darkModeToggle");
+
+        if (darkModeToggle) {
+
+            darkModeToggle.addEventListener("click", function() {
+
+                document.body.classList.toggle("dark-mode");
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
