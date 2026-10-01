@@ -8834,3 +8834,50 @@ body.dark-mode .quick-card {
 
     text-align: center;
 }
+/* =================================
+   HERO RESPONSIVE - MOBILE
+================================= */
+
+@media (max-width: 768px) {
+
+    .hero-modern-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 30px 24px;
+        box-sizing: border-box;
+    }
+
+    .hero-modern-content .hero-label {
+        font-size: 13px;
+        letter-spacing: 3px;
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+
+    .hero-modern-content h2 {
+        font-size: clamp(32px, 8vw, 42px);
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+        overflow-wrap: break-word;
+    }
+
+    .hero-modern-content h2 span {
+        display: block;
+        margin-top: 5px;
+    }
+
+    .hero-modern-content .hero-university {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 22px;
+    }
+
+    .hero-modern-content .hero-description {
+        font-size: 15px;
+        line-height: 1.8;
+        text-align: left;
+        margin-bottom: 25px;
+    }
+
+}
